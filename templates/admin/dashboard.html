@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="bg-white p-6 rounded-lg shadow-md">
+    <h1 class="text-3xl font-bold mb-4">Tableau de bord Administrateur</h1>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div class="bg-blue-100 p-4 rounded">
+            <h3 class="text-lg font-semibold">Prospects</h3>
+            <p class="text-2xl">{{ total_leads }}</p>
+        </div>
+        <div class="bg-green-100 p-4 rounded">
+            <h3 class="text-lg font-semibold">Sessions</h3>
+            <p class="text-2xl">{{ total_sessions }}</p>
+        </div>
+        <div class="bg-yellow-100 p-4 rounded">
+            <h3 class="text-lg font-semibold">Factures</h3>
+            <p class="text-2xl">{{ total_invoices }}</p>
+        </div>
+    </div>
+    <h3 class="text-xl mb-2">Statut des prospects</h3>
+    <canvas id="leadStatusChart" class="w-full h-64"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        fetch("{% url 'lead_status_chart' %}")
+            .then(response => response.json())
+            .then(data => {
+                new Chart(document.getElementById('leadStatusChart'), {
+                    type: 'bar',
+                    data: {
+                        labels: data.labels,
+                        datasets: [{
+                            label: 'Nombre de prospects',
+                            data: data.data,
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: { beginAtZero: true }
+                        }
+                    }
+                });
+            });
+    </script>
+    <div class="mt-6 space-x-4">
+        <a href="{% url 'export_csv' 'learners' %}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Exporter apprenants (CSV)</a>
+        <a href="{% url 'export_csv' 'leads' %}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Exporter prospects (CSV)</a>
+    </div>
+</div>
+{% endblock %}
