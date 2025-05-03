@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="bg-white p-6 rounded-lg shadow-md">
+    <h1 class="text-3xl font-bold mb-4">Espace Formateur</h1>
+    {% if error %}
+        <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4">{{ error }}</div>
+    {% else %}
+        <h2 class="text-2xl mb-4">Bienvenue, {{ trainer.first_name }} {{ trainer.last_name }}</h2>
+        <h3 class="text-xl mb-2">Vos sessions</h3>
+        <table class="w-full border-collapse">
+            <thead>
+                <tr class="bg-gray-200">
+                    <th class="border p-2">Titre</th>
+                    <th class="border p-2">Date de début</th>
+                    <th class="border p-2">Lieu</th>
+                    <th class="border p-2">Apprenants</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for session in sessions %}
+                <tr>
+                    <td class="border p-2">{{ session.title }}</td>
+                    <td class="border p-2">{{ session.start_date|date:"d/m/Y" }}</td>
+                    <td class="border p-2">{{ session.location }}</td>
+                    <td class="border p-2">
+                        {% for learner in session.learners.all %}
+                            {{ learner.first_name }} {{ learner.last_name }}<br>
+                        {% empty %}
+                            Aucun apprenant inscrit.
+                        {% endfor %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="4" class="border p-2 text-center">Aucune session assignée.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</div>
+{% endblock %}
