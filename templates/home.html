@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="bg-white p-6 rounded-lg shadow-md">
+    <h1 class="text-3xl font-bold mb-4">Bienvenue sur FormationPro</h1>
+    <h2 class="text-2xl mb-4">Sessions de formation</h2>
+    <ul class="list-disc pl-5">
+        {% for session in sessions %}
+            <li>{{ session.title }} ({{ session.start_date|date:"d/m/Y" }})</li>
+        {% empty %}
+            <li>Aucune session disponible.</li>
+        {% endfor %}
+    </ul>
+    <div class="mt-6 space-x-4">
+        <a href="/admin/" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Espace Admin</a>
+        {% if user.groups.all.0.name == 'Commerciaux' %}
+            <a href="{% url 'commercial_dashboard' %}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Espace Commercial</a>
+        {% endif %}
+        {% if user.groups.all.0.name == 'Formateurs' %}
+            <a href="{% url 'trainer_portal' %}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Espace Formateur</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
