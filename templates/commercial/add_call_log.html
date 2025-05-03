@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="bg-white p-6 rounded-lg shadow-md max-w-lg mx-auto">
+    <h1 class="text-3xl font-bold mb-4">Enregistrer un appel pour {{ lead }}</h1>
+    <form method="post" class="space-y-4">
+        {% csrf_token %}
+        <div>
+            <label for="duration" class="block text-sm font-medium">Durée (minutes)</label>
+            <input type="number" name="duration" class="w-full border rounded p-2">
+        </div>
+        <div>
+            <label for="notes" class="block text-sm font-medium">Notes</label>
+            <textarea name="notes" class="w-full border rounded p-2"></textarea>
+        </div>
+        <div>
+            <label for="outcome" class="block text-sm font-medium">Résultat</label>
+            <input type="text" name="outcome" class="w-full border rounded p-2" placeholder="Ex. : Intéressé, Pas de réponse">
+        </div>
+        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Enregistrer</button>
+    </form>
+</div>
+{% endblock %}
