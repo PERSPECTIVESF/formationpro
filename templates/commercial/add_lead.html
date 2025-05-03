@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="bg-white p-6 rounded-lg shadow-md max-w-lg mx-auto">
+    <h1 class="text-3xl font-bold mb-4">Ajouter un prospect</h1>
+    <form method="post" class="space-y-4">
+        {% csrf_token %}
+        <div>
+            <label for="first_name" class="block text-sm font-medium">Prénom</label>
+            <input type="text" name="first_name" class="w-full border rounded p-2" required>
+        </div>
+        <div>
+            <label for="last_name" class="block text-sm font-medium">Nom</label>
+            <input type="text" name="last_name" class="w-full border rounded p-2" required>
+        </div>
+        <div>
+            <label for="email" class="block text-sm font-medium">Email</label>
+            <input type="email" name="email" class="w-full border rounded p-2" required>
+        </div>
+        <div>
+            <label for="phone" class="block text-sm font-medium">Téléphone</label>
+            <input type="text" name="phone" class="w-full border rounded p-2">
+        </div>
+        <div>
+            <label for="company" class="block text-sm font-medium">Entreprise</label>
+            <input type="text" name="company" class="w-full border rounded p-2">
+        </div>
+        <div>
+            <label for="status" class="block text-sm font-medium">Statut</label>
+            <select name="status" class="w-full border rounded p-2">
+                <option value="NEW">Nouveau</option>
+                <option value="CONTACTED">Contacté</option>
+                <option value="QUALIFIED">Qualifié</option>
+                <option value="LOST">Perdu</option>
+            </select>
+        </div>
+        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Enregistrer</button>
+    </form>
+</div>
+{% endblock %}
